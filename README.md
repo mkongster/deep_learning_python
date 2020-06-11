@@ -2,6 +2,7 @@
 deep learning using python with keras/tensorflow
 
 Prerequsites (UNIX, Python3):
+
     Install BLAS Library (Open BLAS)
         sudo apt-get install build-essential cmake git unzip pkg-config libopenblas-dev liblapack-dev
 
