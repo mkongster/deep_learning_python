@@ -40,6 +40,20 @@ def plot_loss(history):
 
     plt.show()
 
+def plot_accuracy(history):
+    history_dict = history.history
+    acc_values = history_dict['accuracy']
+    val_acc_values = history_dict['val_accuracy']
+
+    epochs = range(1, len(acc_values) + 1)
+    plt.plot(epochs, acc_values, 'bo', label='Training acc')
+    plt.plot(epochs, val_acc_values, 'b', label='Validation acc')
+    plt.title('Training and validation accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    plt.show()
 
 def main():
     (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
@@ -56,7 +70,7 @@ def main():
     y_val = y_train[:10000]
     partial_y_train = y_train[10000:]
 
-
+    # setting up a 3 layer network
     model = models.Sequential()
     model.add(layers.Dense(16, activation='relu', input_shape=(10000,)))
     model.add(layers.Dense(16, activation='relu'))
@@ -64,11 +78,12 @@ def main():
 
     model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accuracy'])
     history = model.fit(partial_x_train, partial_y_train, epochs=20, batch_size=512, validation_data=(x_val, y_val))
-    print(history.history.keys())
+
+    # looking at the plot, even thought the test accuracy decreases, validation accuracy increases with more epochs (around ~ epoch 4), it is overfitting
+    plot_accuracy(history)
     plot_loss(history)
 
-    # print(decode_to_english(train_data[1]))
-    # print(train_labels[1])
+
 
 if __name__ == '__main__':
     main()
