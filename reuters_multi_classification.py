@@ -1,3 +1,7 @@
+'''A multi-class classification example using reuters articles dataset.
+Attempts to classify articles in to 46 mutually exclusive topics.
+'''
+
 from keras.datasets import reuters
 from keras import models, layers
 import numpy as np
@@ -75,6 +79,12 @@ def main():
 
     plot_loss(history)
     plot_accuracy(history)
+
+    results = model.evaluate(x_test, one_hot_test_labels)
+    print("test results: \n" + str(results))
+
+    predictions = model.predict(x_test)
+    print("predictions: \n" + str(predictions))
 
 
 if __name__ == '__main__':
